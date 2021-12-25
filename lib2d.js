@@ -20,6 +20,7 @@ export function init(w, h) {
     canv.addEventListener("mousemove", updMousePos);
     canv.addEventListener("mousedown", setMouseDown);
     canv.addEventListener("mouseup", setMouseUp);
+    canv.addEventListener("touchmove", updTouchPos);
     canv.addEventListener("touchstart", setTouchDown);
     canv.addEventListener("touchend", setTouchUp);
 }
@@ -54,19 +55,26 @@ function updMousePos(e) {
     mouseY = e.offsetY;
 }
 
-export function setMouseDown() {
+function setMouseDown() {
     mouseStatus = 1;
 }
 
-export function setMouseUp() {
+function setMouseUp() {
     mouseStatus = 2;
 }
 
-export function setTouchDown(e) {
-    mouseStatus = 1;
-    mousePos.x = e.targetTouches[0].pageX - e.target.getBoundingClientRect().left;
-    mousePos.y = e.targetTouches[0].pageY - e.target.getBoundingClientRect().top;
+function updTouchPos(e) {
     e.preventDefault();
+    mouseX = e.targetTouches[0].pageX - e.target.getBoundingClientRect().left;
+    mouseY = e.targetTouches[0].pageY - e.target.getBoundingClientRect().top;
+}
+
+function setTouchDown(e) {
+    mouseStatus = 1;
+
+    e.preventDefault();
+    mouseX = e.targetTouches[0].pageX - e.target.getBoundingClientRect().left;
+    mouseY = e.targetTouches[0].pageY - e.target.getBoundingClientRect().top;
 }
 
 export function setTouchUp(e) {
